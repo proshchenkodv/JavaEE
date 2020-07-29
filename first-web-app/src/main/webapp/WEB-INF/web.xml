@@ -5,5 +5,15 @@
          version="4.0">
 
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>first-servlet</servlet-name>
+    <servlet-class>ru.geekbrains.FirstServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>first-servlet</servlet-name>
+    <url-pattern>/first-servlet</url-pattern>
+  </servlet-mapping>
 </web-app>
 
