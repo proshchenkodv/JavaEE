@@ -4,26 +4,36 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
+    <context-param>
+        <param-name>jdbcConnectionString</param-name>
+        <param-value>jdbc:mysql://localhost:3306/javaee_ecommerce_db?createDatabaseIfNotExist=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</param-value>
+    </context-param>
 
+    <context-param>
+        <param-name>username</param-name>
+        <param-value>palandarus</param-value>
+    </context-param>
 
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.html</url-pattern>
-    <url-pattern>*.css</url-pattern>
-    <url-pattern>*.js</url-pattern>
-  </servlet-mapping>
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>root</param-value>
+    </context-param>
 
-  <error-page>
-    <error-code>404</error-code>
-    <location>/404</location>
-  </error-page>
+    <servlet>
+        <servlet-name>first-servlet</servlet-name>
+        <servlet-class>ru.geekbrains.FirstServlet</servlet-class>
+    </servlet>
 
-  <error-page>
-    <error-code>403</error-code>
-    <location>/403</location>
-  </error-page>
+    <servlet-mapping>
+        <servlet-name>first-servlet</servlet-name>
+        <url-pattern>/first-servlet</url-pattern>
+    </servlet-mapping>
+
+<!--    <error-page>-->
+<!--        <exception-type>java.lang.IllegalArgumentException</exception-type>-->
+<!--        <location>error-servlet</location>-->
+<!--    </error-page>-->
 
 </web-app>
-
