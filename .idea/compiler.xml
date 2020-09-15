@@ -9,5 +9,10 @@
         <module name="first-web-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="first-web-app" target="1.8" />
+      <module name="gb-java-ee-22" target="1.5" />
+      <module name="gb-java-ee-22 (1)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

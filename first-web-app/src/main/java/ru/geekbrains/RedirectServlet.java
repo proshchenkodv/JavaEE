@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "")
+@WebServlet(name = "RedirectServlet", urlPatterns = {"/"})
 public class RedirectServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath()+"/main");
+        resp.sendRedirect(req.getContextPath() + "/products");
     }
 }
