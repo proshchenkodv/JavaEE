@@ -50,10 +50,7 @@
                         <h:outputLabel value="Name"/>
                         <h:inputText styleClass="form-control" id="name" value="#{categoryController.category.name}" placeholder="Enter name"/>
                     </div>
-                    <div class="form-group">
-                        <h:outputLabel value="Description"/>
-                        <h:inputText styleClass="form-control" id="description" value="#{categoryController.category.description}" placeholder="Enter description"/>
-                    </div>
+
                     <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{categoryController.saveCategory()}"/>
                 </h:form>
             </div>

@@ -3,13 +3,11 @@ package ru.geekbrains.controller;
 
 import ru.geekbrains.persist.Company;
 import ru.geekbrains.persist.CompanyRepository;
-import ru.geekbrains.persist.Product;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 
 @SessionScoped
@@ -29,7 +27,7 @@ public class CompanyController implements Serializable {
         this.company = company;
     }
 
-    public List<Company> getAllCompanies() throws SQLException {
+    public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
 
@@ -38,7 +36,7 @@ public class CompanyController implements Serializable {
         return "/about.xhtml?faces-redirect=true";
     }
 
-    public void deleteCompany(Company company) throws SQLException {
+    public void deleteCompany(Company company)  {
         companyRepository.delete(company.getId());
     }
 
@@ -47,7 +45,7 @@ public class CompanyController implements Serializable {
         return "/about.xhtml?faces-redirect=true";
     }
 
-    public String saveCompany() throws SQLException {
+    public String saveCompany() {
         if (company.getId() != null) {
             companyRepository.update(company);
         } else {

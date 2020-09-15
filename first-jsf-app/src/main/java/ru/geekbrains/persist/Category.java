@@ -1,24 +1,36 @@
 package ru.geekbrains.persist;
 
+import javax.persistence.*;
+import java.util.List;
 
-import java.io.Serializable;
+@Entity
+@Table(name = "categories")
+public class Category {
 
-public class Category implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 128, nullable = false)
     private String name;
 
-    private String description;
+    @ManyToOne
+    private Company company;
 
+    @OneToMany(
+            mappedBy = "category",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+
+    private List<Product> products;
 
     public Category() {
     }
 
-    public Category(Long id, String name, String description) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.description = description;
     }
 
     public Long getId() {
@@ -37,12 +49,11 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
-
 }

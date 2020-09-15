@@ -4,13 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.SystemException;
+import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
 import java.math.BigDecimal;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,90 +23,86 @@ public class ProductRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
 
-    @Inject
-    private ServletContext context;
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
 
-    private Connection conn;
+    @Resource
+    private UserTransaction ut;
+
+    @Inject
+    private CategoryRepository categoryRepository;
 
     public ProductRepository() {
     }
 
     @PostConstruct
-    public void init() throws SQLException {
-        conn = (Connection) context.getAttribute("connection");
-        createTableIfNotExists(conn);
+    public void init() {
+        logger.info("CategoryRepository init");
 
+        if (categoryRepository.findAll().isEmpty()) {
+            logger.info("No categories in DB. Initializing.");
+
+            categoryRepository.insert(new Category(null, "Laptop"));
+            categoryRepository.insert(new Category(null, "Tablet"));
+            categoryRepository.insert(new Category(null, "Netbook"));
+        }
+
+        logger.info("ProductRepository init");
         if (this.findAll().isEmpty()) {
             logger.info("No products in DB. Initializing.");
 
-           this.insert(new Product(-1L, "Apple Macbook pro 2015", "Apple profession laptop", new BigDecimal(3000)));
-           this.insert(new Product(-1L, "Apple Macbook air 2015", "Apple netbook", new BigDecimal(2000)));
-           this.insert(new Product(-1L, "Apple iPad", "Apple tablet", new BigDecimal(1000)));
-        }
-    }
+            try {
+                ut.begin();
 
-    public void insert(Product product) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "insert into products(name, description, price) values (?, ?, ?);")) {
-            stmt.setString(1, product.getName());
-            stmt.setString(2, product.getDescription());
-            stmt.setBigDecimal(3, product.getPrice());
-            stmt.execute();
-        }
-    }
+                this.insert(new Product(null, "Apple Macbook pro 2015", "Apple profession laptop",
+                        new BigDecimal(3000), categoryRepository.findByName("Laptop").get()));
+                this.insert(new Product(null, "Apple Macbook air 2015", "Apple netbook",
+                        new BigDecimal(2000), categoryRepository.findByName("Netbook").get()));
+                this.insert(new Product(null, "Apple iPad", "Apple tablet",
+                        new BigDecimal(1000), categoryRepository.findByName("Tablet").get()));
 
-    public void update(Product product) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "update products set name = ?, description = ?, price = ? where id = ?;")) {
-            stmt.setString(1, product.getName());
-            stmt.setString(2, product.getDescription());
-            stmt.setBigDecimal(3, product.getPrice());
-            stmt.setLong(4, product.getId());
-            stmt.execute();
-        }
-    }
-
-    public void delete(long id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "delete from products where id = ?;")) {
-            stmt.setLong(1, id);
-            stmt.execute();
-        }
-    }
-
-    public Optional<Product> findById(long id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "select id, name, description, price from products where id = ?")) {
-            stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return Optional.of(new Product(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getBigDecimal(4)));
+                ut.commit();
+            } catch (Exception ex) {
+                logger.error("", ex);
+                try {
+                    ut.rollback();
+                } catch (SystemException e) {
+                    logger.error("", e);
+                }
             }
+        }
+    }
+
+    @Transactional
+    public void insert(Product product) {
+        logger.info("Inserting new product");
+        em.persist(product);
+    }
+
+    @Transactional
+    public void update(Product product) {
+        em.merge(product);
+    }
+
+    @Transactional
+    public void delete(long id) {
+        Product product = em.find(Product.class, id);
+        if (product != null) {
+            em.remove(product);
+        }
+    }
+
+    public Optional<Product> findById(long id) {
+        Product product = em.find(Product.class, id);
+        if (product != null) {
+            return Optional.of(product);
         }
         return Optional.empty();
     }
 
-    public List<Product> findAll() throws SQLException {
-        List<Product> res = new ArrayList<>();
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("select id, name, description, price from products");
-
-            while (rs.next()) {
-                res.add(new Product(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getBigDecimal(4)));
-            }
-        }
-        return res;
+    public List<Product> findAll() {
+        return em.createQuery("from Product", Product.class)
+                .getResultList();
     }
 
-    private void createTableIfNotExists(Connection conn) throws SQLException {
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute("create table if not exists products (\n" +
-                    "    id int auto_increment primary key,\n" +
-                    "    name varchar(25),\n" +
-                    "    description varchar(255),\n" +
-                    "    price decimal(12, 8) \n" +
-                    ");");
-        }
-    }
 }
