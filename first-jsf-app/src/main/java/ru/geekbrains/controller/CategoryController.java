@@ -1,8 +1,6 @@
 package ru.geekbrains.controller;
 
-import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.CategoryRepository;
-import ru.geekbrains.persist.Product;
+import ru.geekbrains.persist.*;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -18,6 +16,9 @@ public class CategoryController implements Serializable {
 
     @Inject
     private CategoryRepository categoryRepository;
+
+    @Inject
+    private CompanyRepository companyRepository;
 
     private Category category;
 
@@ -54,6 +55,10 @@ public class CategoryController implements Serializable {
             categoryRepository.insert(category);
         }
         return "/categories.xhtml?faces-redirect=true";
+    }
+
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
     }
 
 }

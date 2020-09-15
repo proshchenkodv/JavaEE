@@ -1,50 +1,62 @@
 package ru.geekbrains.persist;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
+@Entity
 public class Company implements Serializable {
 
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        private String name;
+    @Column
+    private String name;
+    @Column
+    private String address;
 
-        private String adress;
+    @OneToMany(
+            mappedBy = "company",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Category> categories;
 
-
-        public Company() {
-        }
-
-        public Company(Long id, String name, String adress) {
-            this.id = id;
-            this.name = name;
-            this.adress = adress;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAdress() {
-            return adress;
-        }
-
-        public void setAdress(String adress) {
-            this.adress = adress;
-        }
-
+    public Company() {
     }
+
+    public Company(Long id, String name, String adress) {
+        this.id = id;
+        this.name = name;
+        this.address = adress;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+}
 
 
