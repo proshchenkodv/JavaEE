@@ -3,7 +3,6 @@ package ru.geekbrains.persist;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class Company implements Serializable {
@@ -17,12 +16,12 @@ public class Company implements Serializable {
     @Column
     private String address;
 
-    @OneToMany(
-            mappedBy = "company",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Category> categories;
+//    @OneToMany(
+//            mappedBy = "company",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private List<Category> categories;
 
     public Company() {
     }

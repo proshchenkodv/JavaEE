@@ -31,7 +31,7 @@
                     <h:link styleClass="nav-link" value="List" outcome="index"/>
                 </li>
                 <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Cart" outcome="cart"/>
+                    <h:link styleClass="nav-link" value="List" outcome="cart"/>
                 </li>
             </ul>
         </div>
@@ -39,48 +39,44 @@
 
     <div class="container">
         <div class="row py-2">
-            <h:form id="productsForm">
-                <div class="col-12">
-                    <h:commandButton value="Add product" styleClass="btn btn-primary"
-                                     action="#{productController.createProduct()}"/>
-                </div>
+            <h:form id="cartForm">
 
                 <div class="col-12">
-                    <h:dataTable value="#{productController.allProducts}"
+                    <h:dataTable value="#{cartController.allProducts}"
                                  styleClass="table table-bordered my-2"
                                  var="prod">
                         <h:column>
                             <f:facet name="header">Id</f:facet>
-                            #{prod.id}
+                            #{prod.getProductRepr().id}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Name</f:facet>
-                            #{prod.name}
+                            #{prod.getProductRepr().name}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Description</f:facet>
-                            #{prod.description}
+                            #{prod.getProductRepr().description}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Price</f:facet>
-                            #{prod.price}
+                            #{prod.getProductRepr().price}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Category</f:facet>
-                            #{prod.categoryName}
+                            #{prod.getProductRepr().categoryName}
                         </h:column>
                         <h:column>
+                            <f:facet name="header">Quantity</f:facet>
+                            #{prod.getQuantity()}
+                        </h:column>
+
+                        <h:column>
                             <f:facet name="header">Action</f:facet>
-                            <h:commandButton value="Edit" styleClass="btn btn-success"
-                                             action="#{productController.editProduct(prod)}"/>
                             <h:commandButton value="Delete" styleClass="btn btn-danger"
-                                             action="#{productController.deleteProduct(prod)}">
-                                <f:ajax event="click" render="productsForm"/>
+                                             action="#{cartController.deleteProduct(prod)}">
+                                <f:ajax event="click" render="cartForm"/>
                             </h:commandButton>
-                            <h:commandButton value="Add to cart" styleClass="btn btn-danger"
-                                             action="#{cartController.add(prod)}">
-                                <f:ajax event="click" render="productsForm"/>
-                            </h:commandButton>
+
                         </h:column>
                     </h:dataTable>
                 </div>
@@ -88,17 +84,6 @@
         </div>
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
 </h:body>
 
 </html>
