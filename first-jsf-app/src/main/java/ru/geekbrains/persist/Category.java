@@ -14,15 +14,11 @@ public class Category {
     @Column(length = 128, nullable = false)
     private String name;
 
-    @ManyToOne
-    private Company company;
-
     @OneToMany(
             mappedBy = "category",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
     private List<Product> products;
 
     public Category() {

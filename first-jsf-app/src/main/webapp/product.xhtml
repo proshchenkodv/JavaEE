@@ -31,6 +31,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">List</a>
             </li>
+            <li class="nav-item active">
+                <h:link styleClass="nav-link" value="List" outcome="cart"/>
+            </li>
         </ul>
     </div>
 </nav>
@@ -56,7 +59,7 @@
                 <div class="form-group">
                     <h:outputLabel value="Category"/>
                     <h:selectOneListbox size="1" styleClass="form-control" id="productCategory"
-                                        value="#{productController.product.category.id}">
+                                        value="#{productController.product.categoryId}">
                         <f:selectItems value="#{productController.allCategories}"
                                        var="cat"
                                        itemValue="#{cat.id}"
