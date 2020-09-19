@@ -1,19 +1,21 @@
+<%@ page contentType="text/html"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 
-<jsp:include page="fragments/head.jsp"/>
+<jsp:include page="fragment/head.jsp"/>
 
 <body>
 
-<jsp:include page="fragments/navigator.jsp">
+<jsp:include page="fragment/navigation.jsp">
     <jsp:param name="pageName" value="Продукт"/>
 </jsp:include>
 
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <c:url value="/products/upsert" var="productPostUrl"/>
+            <c:url value="/upsert" var="productPostUrl"/>
             <form action="${productPostUrl}" method="post">
                 <input type="hidden" id="id" name="id" value="${product.id}">
                 <div class="form-group">
@@ -37,6 +39,6 @@
     </div>
 </div>
 
-<jsp:include page="fragments/scripts.jsp"/>
+<jsp:include page="fragment/scripts.jsp"/>
 
 </body>

@@ -7,16 +7,19 @@ import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
+import ru.geekbrains.rest.ProductServiceRs;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.jws.WebService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Stateless
-public class ProductServiceImpl implements ProductService {
+@WebService(endpointInterface = "ru.geekbrains.service.ProductServiceWs", serviceName = "ProductService")
+public class ProductServiceImpl implements ProductService,  ProductServiceWs, ProductServiceRs {
 
     private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -39,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
         productRepository.insert(product);
     }
 
+
+
     @TransactionAttribute
     @Override
     public void update(ProductRepr productRepr) {
@@ -50,6 +55,11 @@ public class ProductServiceImpl implements ProductService {
                 productRepr.getPrice(),
                 category);
         productRepository.update(product);
+    }
+
+    @Override
+    public ProductRepr findByIdRest(Long id) {
+        return findByIdWs(id);
     }
 
     @TransactionAttribute
@@ -70,4 +80,37 @@ public class ProductServiceImpl implements ProductService {
                 .map(ProductRepr::new)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void addProd(Product product) {
+        productRepository.insert(product);
+    }
+
+    @TransactionAttribute
+    @Override
+    public void deleteProd(long id) {
+        delete(id);
+    }
+
+    @Override
+    public ProductRepr findByIdWs(long id) {
+        return findById(id).get();
+    }
+
+    @Override
+    public ProductRepr findByName(String name) {
+        return productRepository.findByName(name).map(ProductRepr::new).get();
+    }
+
+    @Override
+    public List<ProductRepr> findByCategoryId(long id) {
+        return productRepository.findByCategoryId(id).stream().map(ProductRepr::new).collect(Collectors.toList());
+    }
+
+//    @Override
+//    public Future<ProductRepr> findByIdAsync(long id) {
+//        return new AsyncResult<>(findById(id).get());
+//    }
+
+
 }

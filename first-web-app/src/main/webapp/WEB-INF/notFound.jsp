@@ -9,14 +9,16 @@
 <body>
 
 <jsp:include page="fragment/navigation.jsp">
-    <jsp:param name="pageName" value="Категории"/>
+    <jsp:param name="pageName" value="Бренды"/>
 </jsp:include>
 
 <div class="container">
     <div class="row py-2">
-
+        <h1>Not found</h1>
     </div>
 </div>
+
+<% response.setStatus(404); %>
 
 <jsp:include page="fragment/scripts.jsp"/>
 
