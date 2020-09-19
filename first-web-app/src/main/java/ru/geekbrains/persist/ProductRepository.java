@@ -74,7 +74,7 @@ public class ProductRepository {
                     "    id int auto_increment primary key,\n" +
                     "    name varchar(25),\n" +
                     "    description varchar(255),\n" +
-                    "    price decimal(12, 2) \n" +
+                    "    price decimal(12, 8) \n" +
                     ");");
         }
     }

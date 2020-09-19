@@ -2,7 +2,8 @@ package ru.geekbrains.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.geekbrains.persist.*;
+import ru.geekbrains.persist.Product;
+import ru.geekbrains.persist.ProductRepository;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -39,37 +40,7 @@ public class AppBootstrapListener implements ServletContextListener {
 
                 productRepository.insert(new Product(-1L, "Apple Macbook pro 2015", "Apple profession laptop", new BigDecimal(3000)));
                 productRepository.insert(new Product(-1L, "Apple Macbook air 2015", "Apple netbook", new BigDecimal(2000)));
-                productRepository.insert(new Product(-1L, "Apple iPhone I", "Apple phone", new BigDecimal(100)));
-                productRepository.insert(new Product(-1L, "Apple iPhone II", "Apple phone", new BigDecimal(200)));
-                productRepository.insert(new Product(-1L, "Apple iPhone III", "Apple phone", new BigDecimal(300)));
-                productRepository.insert(new Product(-1L, "Apple iPhone IV", "Apple phone", new BigDecimal(400)));
-                productRepository.insert(new Product(-1L, "Apple iPhone V", "Apple phone", new BigDecimal(500)));
-                productRepository.insert(new Product(-1L, "Apple iPhone VI", "Apple phone", new BigDecimal(600)));
-                productRepository.insert(new Product(-1L, "Apple iPhone VII", "Apple phone", new BigDecimal(700)));
-
-            }
-
-            CategoryRepository categoryRepository=new CategoryRepository(conn);
-            sc.setAttribute("categoryRepository",categoryRepository);
-
-            if (categoryRepository.findAll().isEmpty()) {
-                logger.info("No categories in DB. Initializing.");
-
-                categoryRepository.insert(new Category(-1L, "Apple profession laptop", "Apple profession laptop description"));
-                categoryRepository.insert(new Category(-1L, "Apple Macbook air 2015", "Apple netbook description"));
-                categoryRepository.insert(new Category(-1L, "Apple tablet", "Apple tablet description"));
-                categoryRepository.insert(new Category(-1L, "Apple phone", "Apple phone description"));
-
-            }
-
-            CompanyRepository companyRepository=new CompanyRepository(conn);
-            sc.setAttribute("companyRepository",companyRepository);
-
-            if (companyRepository.findAll().isEmpty()) {
-                logger.info("No companies in DB. Initializing.");
-
-                companyRepository.insert(new Company(-1L, "Out Company Name", "Out Company adress"));
-
+                productRepository.insert(new Product(-1L, "Apple iPad", "Apple tablet", new BigDecimal(1000)));
             }
 
         } catch (SQLException ex) {

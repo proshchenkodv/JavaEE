@@ -9,7 +9,7 @@
 <body>
 
 <jsp:include page="fragment/navigation.jsp">
-    <jsp:param name="pageName" value="Категории"/>
+    <jsp:param name="pageName" value="Бренды"/>
 </jsp:include>
 
 <div class="container">
