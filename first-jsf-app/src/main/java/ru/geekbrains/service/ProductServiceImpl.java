@@ -7,6 +7,7 @@ import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
+import ru.geekbrains.rest.ProductServiceRs;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @WebService(endpointInterface = "ru.geekbrains.service.ProductServiceWs", serviceName = "ProductService")
-public class ProductServiceImpl implements ProductService,  ProductServiceWs {
+public class ProductServiceImpl implements ProductService,  ProductServiceWs, ProductServiceRs {
 
     private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -41,6 +42,8 @@ public class ProductServiceImpl implements ProductService,  ProductServiceWs {
         productRepository.insert(product);
     }
 
+
+
     @TransactionAttribute
     @Override
     public void update(ProductRepr productRepr) {
@@ -52,6 +55,11 @@ public class ProductServiceImpl implements ProductService,  ProductServiceWs {
                 productRepr.getPrice(),
                 category);
         productRepository.update(product);
+    }
+
+    @Override
+    public ProductRepr findByIdRest(Long id) {
+        return findByIdWs(id);
     }
 
     @TransactionAttribute
@@ -78,6 +86,7 @@ public class ProductServiceImpl implements ProductService,  ProductServiceWs {
         productRepository.insert(product);
     }
 
+    @TransactionAttribute
     @Override
     public void deleteProd(long id) {
         delete(id);

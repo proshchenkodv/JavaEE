@@ -1,0 +1,72 @@
+GET http://localhost:8080/first-jsf-app/api/products
+
+###
+
+POST http://127.0.0.1:8080/first-jsf-app/api/products
+Content-Type: application/json
+
+{
+  "categoryId": 3,
+  "categoryName": "Netbook",
+  "description": "Apple netbook",
+  "name": "TestRest",
+  "price": 22000.30
+}
+
+###
+
+POST http://127.0.0.1:8080/first-jsf-app/api/products
+Content-Type: application/json
+
+{
+  "categoryId": 3,
+  "categoryName": "Netbook",
+  "description": "Apple netbook",
+  "name": "TestRestForDel",
+  "price": 22000.30
+}
+
+###
+
+DELETE http://127.0.0.1:8080/first-jsf-app/api/products/5
+
+###
+
+PUT http://127.0.0.1:8080/first-jsf-app/api/products
+Content-Type: application/json
+
+{
+  "categoryId": 5,
+  "categoryName": "Netbook",
+  "description": "Apple netbook",
+  "id": 4,
+  "name": "TestEdit",
+  "price": 9999.00
+}
+
+###
+
+GET http://localhost:8080/first-jsf-app/api/categories
+
+###
+
+POST http://127.0.0.1:8080/first-jsf-app/api/categories
+Content-Type: application/json
+
+{
+
+  "name": "TabletRest"
+}
+
+###
+
+POST http://127.0.0.1:8080/first-jsf-app/api/categories
+Content-Type: application/json
+
+{
+  "name": "PhabletRest"
+}
+
+###
+
+DELETE http://127.0.0.1:8080/first-jsf-app/api/categories/5
