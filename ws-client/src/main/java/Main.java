@@ -13,6 +13,11 @@ public class Main {
 
         port.findAll().forEach(prod -> System.out.println( prod.getId() + " : " + prod.getName() +"-" + prod.getDescription()));
 
+        System.out.println(port.findByIdWs(2L).getName());
+
+        System.out.println(port.findByName("Apple iPad").getName());
+
+        port.findByCategoryId(1L).forEach(prod -> System.out.println(prod.getName() +"-" + prod.getDescription()));
 
 
 

@@ -8,19 +8,17 @@ import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
 
-import javax.ejb.AsyncResult;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.jws.WebService;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Stateless
 @WebService(endpointInterface = "ru.geekbrains.service.ProductServiceWs", serviceName = "ProductService")
-public class ProductServiceImpl implements ProductService, ProductServiceRemote, ProductServiceWs {
+public class ProductServiceImpl implements ProductService,  ProductServiceWs {
 
     private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -76,10 +74,34 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote,
     }
 
     @Override
-    public Future<ProductRepr> findByIdAsync(long id) {
-        return new AsyncResult<>(findById(id).
-                orElse(new ProductRepr()));
+    public void addProd(Product product) {
+        productRepository.insert(product);
     }
+
+    @Override
+    public void deleteProd(long id) {
+        delete(id);
+    }
+
+    @Override
+    public ProductRepr findByIdWs(long id) {
+        return findById(id).get();
+    }
+
+    @Override
+    public ProductRepr findByName(String name) {
+        return productRepository.findByName(name).map(ProductRepr::new).get();
+    }
+
+    @Override
+    public List<ProductRepr> findByCategoryId(long id) {
+        return productRepository.findByCategoryId(id).stream().map(ProductRepr::new).collect(Collectors.toList());
+    }
+
+//    @Override
+//    public Future<ProductRepr> findByIdAsync(long id) {
+//        return new AsyncResult<>(findById(id).get());
+//    }
 
 
 }
