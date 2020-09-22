@@ -1,34 +1,36 @@
-<html lang="en"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<ui:include src="WEB-INF/head.xhtml">
-    <ui:param name="title" value="Category"/>
+<ui:include src="../WEB-INF/head.xhtml">
+    <ui:param name="title" value="Product"/>
 </ui:include>
 
 <h:body>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Category</a>
+        <a class="navbar-brand" href="#">EShop</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"/>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Products" outcome="index"/>
+                    <h:link styleClass="nav-link" value="ToDo" outcome="/index"/>
                 </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Categories" outcome="categories"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="ToDo Category" outcome="/todo_categories"/>
                 </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Cart" outcome="cart"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="Cart" outcome="/cart"/>
                 </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="About Us" outcome="about"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" outcome="/admin/users">Users</h:link>
                 </li>
                 <li class="nav-item">
                     <h:form rendered="#{request.userPrincipal!=null}">
@@ -42,18 +44,29 @@
     <div class="container">
         <div class="row py-2">
             <div class="col-12">
-                <h:form id="categoryForm">
+                <h:form id="productForm">
                     <div class="form-group">
-                        <h:outputLabel value="Name"/>
-                        <h:inputText styleClass="form-control" id="name" value="#{categoryController.category.name}" placeholder="Enter name"/>
+                        <h:outputLabel value="Name" for="login"/>
+                        <h:inputText styleClass="form-control" id="login" name="login" placeholder="Enter login"
+                                     value="#{userController.user.login}" required="true"
+                                     requiredMessage="Login is required"/>
                     </div>
-
-                    <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{categoryController.saveCategory()}"/>
+                    <div class="form-group">
+                        <h:outputLabel value="Password" for="password"/>
+                        <h:inputText p:type="password" styleClass="form-control" id="password" name="password"
+                                     placeholder="Enter password"
+                                     value="#{userController.user.password}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:selectManyCheckbox value="#{userController.user.roles}" layout="pageDirection">
+                            <f:selectItems value="#{userController.allRoles}" />
+                        </h:selectManyCheckbox>
+                    </div>
+                    <h:commandButton value="Submit" styleClass="btn btn-primary" action="#{userController.saveUser()}"/>
                 </h:form>
             </div>
         </div>
     </div>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

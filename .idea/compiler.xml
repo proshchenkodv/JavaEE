@@ -8,7 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="client" />
         <module name="first-web-app" />
+        <module name="todo-jsf" />
         <module name="ws-client" />
+        <module name="rest-client" />
         <module name="first-jsf-app" />
       </profile>
     </annotationProcessing>
@@ -17,6 +19,8 @@
       <module name="first-jsf-app" target="1.8" />
       <module name="first-web-app" target="1.8" />
       <module name="gb-java-ee-22" target="1.8" />
+      <module name="rest-client" target="1.8" />
+      <module name="todo-jsf" target="1.8" />
       <module name="ws-client" target="1.8" />
     </bytecodeTargetLevel>
   </component>

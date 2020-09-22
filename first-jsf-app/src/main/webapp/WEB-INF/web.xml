@@ -27,19 +27,25 @@
         <url-pattern>*.css</url-pattern>
     </servlet-mapping>
 
-    <context-param>
-        <param-name>jdbcConnectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/javaee_lesson_db?createDatabaseIfNotExist=true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</param-value>
-    </context-param>
 
-    <context-param>
-        <param-name>username</param-name>
-        <param-value>palandarus</param-value>
-    </context-param>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>RealmUsersRoles</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/index.xhtml</form-error-page>
+        </form-login-config>
 
-    <context-param>
-        <param-name>password</param-name>
-        <param-value>root</param-value>
-    </context-param>
+    </login-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin pages</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
 
 </web-app>

@@ -4,17 +4,9 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>New product</title>
-</h:head>
+<ui:include src="WEB-INF/head.xhtml">
+    <ui:param name="title" value="Product"/>
+</ui:include>
 
 <h:body>
 
@@ -33,6 +25,11 @@
             </li>
             <li class="nav-item active">
                 <h:link styleClass="nav-link" value="List" outcome="cart"/>
+            </li>
+            <li class="nav-item">
+                <h:form rendered="#{request.userPrincipal!=null}">
+                    <h:commandLink action="#{userController.logout()}" value="Logout #{request.userPrincipal.name}"/>
+                </h:form>
             </li>
         </ul>
     </div>

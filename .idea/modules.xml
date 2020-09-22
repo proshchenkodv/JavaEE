@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/first-jsf-app/first-jsf-app.iml" filepath="$PROJECT_DIR$/first-jsf-app/first-jsf-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/first-web-app/first-web-app.iml" filepath="$PROJECT_DIR$/first-web-app/first-web-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/gb-java-ee-22.iml" filepath="$PROJECT_DIR$/gb-java-ee-22.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-client/rest-client.iml" filepath="$PROJECT_DIR$/rest-client/rest-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/todo-jsf/todo-jsf.iml" filepath="$PROJECT_DIR$/todo-jsf/todo-jsf.iml" />
       <module fileurl="file://$PROJECT_DIR$/ws-client/ws-client.iml" filepath="$PROJECT_DIR$/ws-client/ws-client.iml" />
     </modules>
   </component>

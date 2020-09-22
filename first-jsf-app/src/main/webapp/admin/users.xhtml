@@ -1,35 +1,37 @@
-<html lang="en"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<ui:include src="WEB-INF/head.xhtml">
-    <ui:param name="title" value="About Company"/>
+<ui:include src="../WEB-INF/head.xhtml">
+    <ui:param name="title" value="User list"/>
 </ui:include>
 
 <h:body>
 
+    <f:event listener="${userController.preLoad()}" type="preRenderView"/>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">About Us</a>
+        <a class="navbar-brand" href="#">EShop</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"/>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Products" outcome="index"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="ToDo" outcome="index"/>
                 </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="Categories" outcome="categories"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="ToDo Category" outcome="todo_categories"/>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <h:link styleClass="nav-link" value="Cart" outcome="cart"/>
                 </li>
-                <li class="nav-item active">
-                    <h:link styleClass="nav-link" value="About Us" outcome="about"/>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" outcome="admin/users">Users</h:link>
                 </li>
                 <li class="nav-item">
                     <h:form rendered="#{request.userPrincipal!=null}">
@@ -42,32 +44,36 @@
 
     <div class="container">
         <div class="row py-2">
-            <h:form id="companiesForm">
-
+            <h:form id="productsForm">
+                <div class="col-12">
+                    <h:commandButton value="Add user" styleClass="btn btn-primary"
+                                     action="#{userController.createUser()}"/>
+                </div>
 
                 <div class="col-12">
-                    <h:dataTable value="#{companyController.allCompanies}"
-                                 styleClass="table table-bordered my-2"
-                                 var="company">
+                    <h:dataTable value="#{userController.allUsers}" var="user"
+                                 styleClass="table table-bordered my-2">
                         <h:column>
                             <f:facet name="header">Id</f:facet>
-                            #{company.id}
+                            #{user.id}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Name</f:facet>
-                            #{company.name}
+                            <f:facet name="header">Login</f:facet>
+                            #{user.login}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Address</f:facet>
-                            #{company.address}
+                            <f:facet name="header">Action</f:facet>
+                            <h:commandButton value="Edit" action="#{userController.editUser(user)}"
+                                             styleClass="mr-1"/>
+                            <h:commandButton value="Delete" action="#{userController.deleteUser(user)}">
+                                <f:ajax event="click" render="productsForm"/>
+                            </h:commandButton>
                         </h:column>
-
                     </h:dataTable>
                 </div>
             </h:form>
         </div>
     </div>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -80,7 +86,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-
 </h:body>
-
 </html>
