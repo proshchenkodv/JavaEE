@@ -3,17 +3,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>Shopping application</title>
-</h:head>
+<ui:include src="WEB-INF/head.xhtml">
+    <ui:param name="title" value="Products"/>
+</ui:include>
 
 <h:body>
 
@@ -38,6 +30,17 @@
                 </li>
                 <li class="nav-item active">
                     <h:link styleClass="nav-link" value="About Us" outcome="about"/>
+                </li>
+                <li class="nav-item active">
+                    <h:form rendered="#{request.userPrincipal==null}">
+                        <h:link styleClass="nav-link" value="Login" outcome="login"/>
+                    </h:form>
+                </li>
+                <li class="nav-item active">
+                    <h:form rendered="#{request.userPrincipal!=null}">
+                        <h:commandLink action="#{userController.logout()}" styleClass="nav-link"
+                                       value="Logout #{request.userPrincipal.name}"/>
+                    </h:form>
                 </li>
             </ul>
         </div>
@@ -72,11 +75,19 @@
                             #{prod.price}
                         </h:column>
                         <h:column>
+                            <f:facet name="header">Category</f:facet>
+                            #{prod.categoryName}
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:commandButton value="Edit" styleClass="btn btn-success"
                                              action="#{productController.editProduct(prod)}"/>
                             <h:commandButton value="Delete" styleClass="btn btn-danger"
                                              action="#{productController.deleteProduct(prod)}">
+                                <f:ajax event="click" render="productsForm"/>
+                            </h:commandButton>
+                            <h:commandButton value="Add to cart" styleClass="btn btn-danger"
+                                             action="#{cartController.add(prod)}">
                                 <f:ajax event="click" render="productsForm"/>
                             </h:commandButton>
                         </h:column>

@@ -1,14 +1,15 @@
+<%@ page contentType="text/html"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 
-<jsp:include page="fragments/head.jsp"/>
+<jsp:include page="fragment/head.jsp"/>
 
 <body>
 
-<jsp:include page="fragments/navigator.jsp">
+<jsp:include page="fragment/navigation.jsp">
     <jsp:param name="pageName" value="Продукты"/>
-    <jsp:param name="activePage" value="products"/>
 </jsp:include>
 
 <div class="container">
@@ -50,14 +51,11 @@
                                 <c:out value="${prod.price}"/>
                                 <%--                        $<%= prod.getPrice() %></td>--%>
                         <td>
-                            <c:url value="/products/edit" var="productEditUrl">
+                            <c:url value="/edit" var="productEditUrl">
                                 <c:param name="id" value="${prod.id}"/>
                             </c:url>
                             <a class="btn btn-success" href="${productEditUrl}"><i class="fas fa-edit"></i></a>
-                        <c:url value="/products/delete" var="productDeleteUrl">
-                            <c:param name="id" value="${prod.id}"/>
-                        </c:url>
-                            <a class="btn btn-danger" href="${productDeleteUrl}"><i class="far fa-trash-alt"></i></a>
+                            <a class="btn btn-danger" href="#"><i class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -68,6 +66,7 @@
     </div>
 </div>
 
-<jsp:include page="fragments/scripts.jsp"/>
+<jsp:include page="fragment/scripts.jsp"/>
+
 </body>
 </html>

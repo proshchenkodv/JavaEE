@@ -17,7 +17,7 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html");
+        //response.setContentType("text/html");
 
         chain.doFilter(request, response);
     }
